@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Welcome to the thread for <%= sub.topic %></h1>
+
+	
+	<% threads.forEach(function(thread){ %>
+		<a href='/forums/<%=id%>/thread/<%=thread.id%>'><p> <%=thread.title%> </p>
+		</a>
+
+		<p> 	-posted by: <%= thread.name %>  ^ <%=thread.upvotes%> || </p>
+
+
+
+
+	<%	}) %>
+
+
+	<form action='/forums/<%=id%>/thread/<%=sub.id%>' method='POST'>
+		<label for='thread'>Start new thread</label><br><br>
+		<input type='text' name='name' placeholder='thread title' id='thread'><br><br>
+		<textarea rows="4" cols="50" name="text">
+		</textarea><br><br>
+
+		<button>Start thread</button>
+	</form>
+
+
+		
+	
+</body>
+</html>

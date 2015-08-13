@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="http://localhost:3000/style.css">
+</head>
+<body>
+	<h1><%= thread.title %></h1><br><br>
+	<h3><%= thread.description %></h3><br><br><br>
+
+	<% comments.forEach(function(comment){ %>
+		<p> <%=comment.comment%> <br>
+			- commented by: <%=comment.name%> </p><br><br>
+		
+	<%	}) %>
+
+	<form action='/forums/<%=id%>/comment/<%=thread.id%>' method='POST'>
+			<label for='thread'>Enter comment</label><br><br>
+			<textarea rows="3" cols="35" name="text">
+			</textarea><br><br>
+
+			<button>Submit</button>
+	</form>
+
+	
+</body>
+</html>

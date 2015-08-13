@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="http://localhost:3000/style.css">
+</head>
+</head>
+<body>
+	<h1>list of subforums</h1>
+	<% subs.forEach(function(sub){ %>
+		<a href='/forums/<%=userID%>/sub/<%=sub.id%>'>
+			<h3> <%= sub.topic %></h3>
+		</a>
+				
+
+
+
+	<% }) %>
+
+	<form action='/forums/<%=userID%>/new' method='POST'>
+		<label for='thread'>Create new subforum</label><br><br>
+		<input type='text' name='name' placeholder='thread name' id='thread'><br><br>
+
+		<button>Start subforum</button>
+	</form>
+	
+</body>
+</html>

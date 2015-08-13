@@ -1,0 +1,114 @@
+
+
+index.ejs
+________________________________________________________
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="http://localhost:3000/style.css">
+</head>
+</head>
+<body>
+	<h1>list of forums</h1>
+	<% threads.forEach(function(thread){ %>
+		<a href='/forums/<%=userID%>/thread/<%=thread.id%>'>
+			<h3> <%= thread.title %></h3>
+		</a>
+				<p>-  posted by: <%=thread.name%>  ^ <%=thread.upvotes%> </p><br><br>
+
+
+
+	<% }) %>
+
+	<form action='/forums/<%=userID%>/new' method='POST'>
+		<label for='thread'>Start new thread</label><br><br>
+		<input type='text' name='name' placeholder='thread name' id='thread'><br><br>
+		<textarea rows="4" cols="50" name="text">
+		</textarea><br><br>
+
+		<button>Start thread</button>
+	</form>
+	
+</body>
+</html>
+
+
+________________________________________________________
+
+main.ejs
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="http://localhost:3000/style.css">
+</head>
+<body>
+	<h1> welcome </h1>
+	<form action='/forums' method='GET'>
+		<input type='text' name='name' placeholder='Enter username'>
+		<button>Create user</button>
+	</form>
+
+
+	
+</body>
+</html>
+
+
+
+________________________________________________________
+
+
+thread.ejs
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Welcome to the thread for <%= thread.title %></h1>
+
+	<p><%=thread.description%></p>
+	<% if(comments.length > 0){ %>
+
+	<% comments.forEach(function(input){ %>
+
+		<p><%=input.comment %> - </p><br><br>
+
+		<% }) %>
+
+		<% }else{ %>
+		<p>No comments yet</p>
+
+	 <% } %>
+
+		<form action="/forms/<%=userID%>/upvote/<%=comments[0].id%>" method='POST'>
+			<button>upvote</button>
+
+		</form><br>
+
+		<form action='/forums/<%=userID%>/comment/<%=comments[0].id%>' method='POST'>
+			<label for='thread'>Enter comment</label><br><br>
+			<textarea rows="3" cols="35" name="text">
+			</textarea><br><br>
+
+			<button>Submit</button>
+	</form>
+
+		
+	
+</body>
+</html>
+
