@@ -42,7 +42,6 @@ app.get('/forums', function(req, res){
 				if(err){
 					throw err;
 				}
-				console.log(rows);
 				res.render('index.ejs', {userID: userID, subs: rows});
 			})
 		}
@@ -63,8 +62,8 @@ app.get('/forums/:id/sub/:sid', function(req, res){		//id = user id   sid = subf
 			if(err){
 				throw err;
 			}
-			db.all('SELECT * FROM comments WHERE id=?', )
-		console.log(threads);
+			// db.all('SELECT * FROM comments WHERE id=?', )
+		
 		res.render('thread.ejs', {threads: threads, sub: rows, id:id})
 		})
 	})
@@ -94,7 +93,7 @@ app.post('/forums/:id/thread/:sid', function(req, res){
 	var name = req.body.name;
 	var text = req.body.text;
 
-	db.run('INSERT INTO threads (description, title, upvotes, user_id, sub_id) VALUES (?, ?, ?, ?, ?)',text, name, 0, id, sid, function(err){
+	db.run('INSERT INTO threads (description, title, upvotes, user_id, sub_id, counter) VALUES (?, ?, ?, ?, ?, ?)',text, name, 0, id, sid, 0, function(err){
 		if(err){
 			throw err;
 		}
@@ -109,13 +108,26 @@ app.post('/forums/:id/comment/:tid', function(req, res){
 	var id = req.params.id;
 	var text = req.body.text;
 	var tid = req.params.tid;
-	console.log(tid)
+	console.log(tid);
 
 	db.run('INSERT INTO comments (comment, thread_id, user_id) VALUES (?, ?, ?)', text, tid, id, function(err){
 		if(err){
 			throw err;
 		}
-		res.redirect('/forums/'+id+'/thread/'+tid);
+		db.run('SELECT * FROM threads WHERE id=?', tid, function(err, rows){
+			if(err){
+				throw err;
+			}
+			// console.log(thread);
+			// var count = thread.counter;
+			// // console.log(count);
+			// db.run('UPDATE threads SET counter=?', count+1, function(err){
+			// 	if(err){
+			// 		throw err;
+			// 	}
+				res.redirect('/forums/'+id+'/thread/'+tid);
+		// 	})
+		})
 	})
 })
 
@@ -125,6 +137,7 @@ app.post('/forums/:id/comment/:tid', function(req, res){
 app.get('/forums/:id/thread/:tid', function(req, res){
 	var id = req.params.id;
 	var tid = req.params.tid;
+	console.log("thread id is : "+ tid);
 
 	db.get('SELECT * FROM threads WHERE id=?', tid, function(err, thread){
 		if(err){

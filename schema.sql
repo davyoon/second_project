@@ -16,6 +16,7 @@ CREATE TABLE threads (
 	upvotes INTEGER,
 	user_id INTEGER,
 	sub_id INTEGER,
+	counter INTEGER,
 	FOREIGN KEY(user_id) REFERENCES users(id),
 	FOREIGN KEY(sub_id) REFERENCES subforums(id)
 );
