@@ -1,0 +1,85 @@
+body{
+	background-image: url('bg2.jpg');
+	background-size: cover;
+}
+
+.pure-g{
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5em;
+	background-color: #DEFFFF;
+
+}
+
+.pure-g::after{
+	opacity:1;
+}
+
+.banner{
+text-align: center;
+margin-bottom: 4em;
+
+}
+
+.login{
+	text-align: right;
+	margin-bottom: 2em;
+	margin-top:1em;
+}
+
+.vid{
+
+}
+
+nav{
+	text-align: right;
+}
+
+.title{
+	text-align: center;
+}
+
+.thread{
+	margin-left: auto;
+	margin-right: auto;
+	
+	border: 2px solid black;
+}
+
+.cont{
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.clickT{
+	text-decoration: none;
+	font-size: 25px;
+	font-family: verdana;
+}
+
+.status{
+	font-size: 12px;
+	font-family: verdana;
+}
+
+.desc{
+
+}
+
+#upvote{
+	text-align: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+

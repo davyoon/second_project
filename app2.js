@@ -54,7 +54,7 @@ app.get('/forums', function(req, res){
 app.get('/forums/:id/sub/:sid', function(req, res){		//id = user id   sid = subforum id
 	var id = req.params.id;
 	var sid = req.params.sid;
-	db.all('SELECT * FROM threads INNER JOIN users ON threads.user_idt=users.users_id WHERE sub_idt=?', sid, function(err, threads){
+	db.all('SELECT * FROM threads INNER JOIN users ON threads.user_idt=users.users_id WHERE sub_idt=? ORDER BY upvotes DESC', sid, function(err, threads){
 		if(err){
 			throw err;
 		}
@@ -115,21 +115,12 @@ app.post('/forums/:id/comment/:tid', function(req, res){
 		if(err){
 			throw err;
 		}
-		console.log("test1");
-		db.get('SELECT * FROM threads WHERE threads_id=?', tid, function(err, row){
-			if(err){
-				throw err;
-			}console.log("test2");
-			console.log("row is "+row[0]);
-			var count = row.counter;
-			console.log(count);
-			db.run('UPDATE threads SET counter=?', count+1, function(err){
+			db.run('UPDATE threads SET counter=counter+1 WHERE threads_id=?', tid, function(err){
 				if(err){
 					throw err;
 				}
 				res.redirect('/forums/'+id+'/thread/'+tid);
 			})
-		})
 	})
 })
 
@@ -169,6 +160,7 @@ app.put('/forums/:id/upvote/:tid', function(req, res){
 	})
 
 })
+
 
 
 
