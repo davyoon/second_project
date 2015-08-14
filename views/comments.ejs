@@ -8,8 +8,20 @@
 	<link rel="stylesheet" href="http://localhost:3000/style.css">
 </head>
 <body>
+	<form action='/forums' method='GET'>
+		<button>home</button>
+	</form>
+
+
 	<h1><%= thread.title %></h1><br><br>
 	<h3><%= thread.description %></h3><br><br><br>
+
+	<form action='/forums/<%=id%>/upvote/<%=thread.threads_id%>?_method=PUT' method='POST'>
+		<input type='hidden' name='upvote' value='<%=thread.upvotes%>'>
+		<button>upvote</button>
+	</form>
+
+	<h3> <%=thread.upvotes%></h3>
 
 	<% comments.forEach(function(comment){ %>
 		<p> <%=comment.comment%> <br>
@@ -17,7 +29,7 @@
 		
 	<%	}) %>
 
-	<form action='/forums/<%=id%>/comment/<%=thread.id%>' method='POST'>
+	<form action='/forums/<%=id%>/comment/<%=thread.threads_id%>' method='POST'>
 			<label for='thread'>Enter comment</label><br><br>
 			<textarea rows="3" cols="35" name="text">
 			</textarea><br><br>

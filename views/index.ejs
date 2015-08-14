@@ -11,7 +11,7 @@
 <body>
 	<h1>list of subforums</h1>
 	<% subs.forEach(function(sub){ %>
-		<a href='/forums/<%=userID%>/sub/<%=sub.id%>'>
+		<a href='/forums/<%=userID%>/sub/<%=sub.subforums_id%>'>
 			<h3> <%= sub.topic %></h3>
 		</a>
 				

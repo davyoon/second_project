@@ -54,11 +54,12 @@ app.get('/forums', function(req, res){
 app.get('/forums/:id/sub/:sid', function(req, res){		//id = user id   sid = subforum id
 	var id = req.params.id;
 	var sid = req.params.sid;
-	db.all('SELECT * FROM threads INNER JOIN users ON threads.user_id=users.id WHERE sub_id=?', sid, function(err, threads){
+	db.all('SELECT * FROM threads INNER JOIN users ON threads.user_idt=users.users_id WHERE sub_idt=?', sid, function(err, threads){
 		if(err){
 			throw err;
 		}
-		db.get('SELECT * FROM subforums WHERE id=?', sid, function(err, rows){
+		console.log(threads);
+		db.get('SELECT * FROM subforums WHERE subforums_id=?', sid, function(err, rows){
 			if(err){
 				throw err;
 			}
@@ -93,7 +94,7 @@ app.post('/forums/:id/thread/:sid', function(req, res){
 	var name = req.body.name;
 	var text = req.body.text;
 
-	db.run('INSERT INTO threads (description, title, upvotes, user_id, sub_id, counter) VALUES (?, ?, ?, ?, ?, ?)',text, name, 0, id, sid, 0, function(err){
+	db.run('INSERT INTO threads (description, title, upvotes, user_idt, sub_idt, counter) VALUES (?, ?, ?, ?, ?, ?)',text, name, 0, id, sid, 0, function(err){
 		if(err){
 			throw err;
 		}
@@ -110,23 +111,24 @@ app.post('/forums/:id/comment/:tid', function(req, res){
 	var tid = req.params.tid;
 	console.log(tid);
 
-	db.run('INSERT INTO comments (comment, thread_id, user_id) VALUES (?, ?, ?)', text, tid, id, function(err){
+	db.run('INSERT INTO comments (comment, thread_idc, user_idc) VALUES (?, ?, ?)', text, tid, id, function(err){
 		if(err){
 			throw err;
 		}
-		db.run('SELECT * FROM threads WHERE id=?', tid, function(err, rows){
+		console.log("test1");
+		db.get('SELECT * FROM threads WHERE threads_id=?', tid, function(err, row){
 			if(err){
 				throw err;
-			}
-			// console.log(thread);
-			// var count = thread.counter;
-			// // console.log(count);
-			// db.run('UPDATE threads SET counter=?', count+1, function(err){
-			// 	if(err){
-			// 		throw err;
-			// 	}
+			}console.log("test2");
+			console.log("row is "+row[0]);
+			var count = row.counter;
+			console.log(count);
+			db.run('UPDATE threads SET counter=?', count+1, function(err){
+				if(err){
+					throw err;
+				}
 				res.redirect('/forums/'+id+'/thread/'+tid);
-		// 	})
+			})
 		})
 	})
 })
@@ -139,11 +141,11 @@ app.get('/forums/:id/thread/:tid', function(req, res){
 	var tid = req.params.tid;
 	console.log("thread id is : "+ tid);
 
-	db.get('SELECT * FROM threads WHERE id=?', tid, function(err, thread){
+	db.get('SELECT * FROM threads WHERE threads_id=?', tid, function(err, thread){
 		if(err){
 			throw err;
 		}
-		db.all('SELECT * FROM comments INNER JOIN users ON comments.user_id=users.id WHERE thread_id=?', tid, function(err, rows){
+		db.all('SELECT * FROM comments INNER JOIN users ON comments.user_idc=users.users_id WHERE thread_idc=?', tid, function(err, rows){
 			if(err){
 				throw err;
 			}
@@ -155,12 +157,18 @@ app.get('/forums/:id/thread/:tid', function(req, res){
 
 
 
-// app.post('/forums/:id/upvote/:tid', function(req, res){
-// 	var id = req.params.id;
-// 	var tid = req.params.tid;
+app.put('/forums/:id/upvote/:tid', function(req, res){
+	var id = req.params.id;
+	var tid = req.params.tid;
+	var current = parseInt(req.body.upvote);
+	var added = current+1;
 
-// 	db.
-// })
+	db.run('UPDATE threads SET upvotes=? WHERE threads_id=?',added, tid, function(err){
+
+		res.redirect('/forums/'+id+'/thread/'+tid);
+	})
+
+})
 
 
 
