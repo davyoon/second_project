@@ -3,6 +3,7 @@ var app = express();
 var ejs = require('ejs');
 var fs = require('fs');
 var bodyParser = require('body-parser');
+var request = require('request');
 
 var methodOverride = require('method-override');
 var urlencodedBodyParser = bodyParser.urlencoded({extended: false});
@@ -20,54 +21,68 @@ app.get('/', function(req, res){
 	res.redirect('/login');
 });
 
+
+
+
 app.get('/login', function(req, res){
 	res.render('main.ejs')
 });
 
+
+
+
 app.get('/forums', function(req, res){
 	var user = req.query.name;
-	db.run('INSERT INTO users (name) VALUES (?)', user, function(err){
-		if(err){
-			throw err;
-			
-		}else{
-			var userID = this.lastID;
-			db.all('SELECT * FROM users INNER JOIN threads ON threads.user_id=users.id', function(err, rows){
-				if(err){
-					throw err;
-				}
-				console.log(rows);
-				res.render('index.ejs', {userID: userID, threads: rows});
-			})
-		}
-
-	});
-
+		db.run('INSERT INTO users (name) VALUES (?)', user, function(err){
+			if(err){
+				throw err;
+				
+			}else{
+				var userID = this.lastID;
+				db.all('SELECT * FROM subforums', function(err, rows){			//grabbing id of user instead of thread?
+					if(err){
+						throw err;
+					}
+					res.render('index.ejs', {userID: userID, subs: rows});
+				})
+			}
+		});
 })
 
 
-app.get('/forums/:id/thread/:tid', function(req, res){		//id = user id   tid = thread id
+
+
+app.get('/forums/:id/sub/:sid', function(req, res){		//id = user id   sid = subforum id
 	var id = req.params.id;
-	var tid = req.params.tid;
-	db.get('SELECT * FROM threads WHERE id=?', tid, function(err, thread){
+	var sid = req.params.sid;
+	db.all('SELECT * FROM threads INNER JOIN users ON threads.user_idt=users.users_id WHERE sub_idt=? ORDER BY upvotes DESC', sid, function(err, threads){
 		if(err){
 			throw err;
 		}
-		console.log(thread);
-		db.all('SELECT * FROM comments WHERE thread_id=?', tid, function(err, rows){
-		res.render('thread.ejs', {thread: thread, comments:rows, userID: id});
-			
+		console.log(threads);
+		db.get('SELECT * FROM subforums WHERE subforums_id=?', sid, function(err, rows){
+			if(err){
+				throw err;
+			}
+			db.all('SELECT * FROM subforums', function(err, subs){			//grabbing id of user instead of thread?
+				if(err){
+					throw err;
+				}
+		
+			res.render('thread.ejs', {threads: threads, sub: rows, id:id, subs: subs})
+			})
 		})
 	})
 })
 
+
+
+
 app.post('/forums/:id/new', function(req, res){
 	var id = req.params.id;
-	var title = req.body.name;
-	var text = req.body.text;
-	console.log(title)
+	var topic = req.body.name;
 
-	db.run('INSERT INTO threads (description, title, upvotes, user_id) VALUES (?, ?, ?, ?)', text, title, 0, id, function(err){
+	db.run('INSERT INTO subforums (topic) VALUES (?)', topic, function(err){
 		if(err){
 			throw err;
 		}
@@ -75,28 +90,152 @@ app.post('/forums/:id/new', function(req, res){
 	})
 })
 
+
+
+
+app.post('/forums/:id/thread/:sid', function(req, res){
+	var id = req.params.id;
+	var sid = req.params.sid;
+	var name = req.body.name;
+	var text = req.body.text;
+
+	db.run('INSERT INTO threads (description, title, upvotes, user_idt, sub_idt, counter) VALUES (?, ?, ?, ?, ?, ?)',text, name, 0, id, sid, 0, function(err){
+		if(err){
+			throw err;
+		}
+		res.redirect('/forums/'+id+'/sub/'+sid);
+	})
+})
+
+
+
+
 app.post('/forums/:id/comment/:tid', function(req, res){
 	var id = req.params.id;
 	var text = req.body.text;
 	var tid = req.params.tid;
-	console.log(tid)
+	console.log(tid);
 
-	db.run('INSERT INTO comments (comment, thread_id, user_id) VALUES (?, ?, ?)', text, tid, id, function(err){
+	db.run('INSERT INTO comments (comment, thread_idc, user_idc) VALUES (?, ?, ?)', text, tid, id, function(err){
 		if(err){
 			throw err;
 		}
+			db.run('UPDATE threads SET counter=counter+1 WHERE threads_id=?', tid, function(err){
+				if(err){
+					throw err;
+				}
+				res.redirect('/forums/'+id+'/thread/'+tid);
+			})
+	})
+})
+
+
+
+
+app.get('/forums/:id/thread/:tid', function(req, res){
+	var id = req.params.id;
+	var tid = req.params.tid;
+	console.log("thread id is : "+ tid);
+
+	db.get('SELECT * FROM threads WHERE threads_id=?', tid, function(err, thread){
+		if(err){
+			throw err;
+		}
+		db.all('SELECT * FROM comments INNER JOIN users ON comments.user_idc=users.users_id WHERE thread_idc=?', tid, function(err, rows){
+			if(err){
+				throw err;
+			}
+			db.all('SELECT * FROM subforums', function(err, subs){			//grabbing id of user instead of thread?
+				if(err){
+					throw err;
+				}
+				res.render('comments.ejs', {id:id, thread: thread, comments: rows, subs:subs});
+			})
+		})
+	})
+})
+
+
+
+
+app.put('/forums/:id/upvote/:tid', function(req, res){
+	var id = req.params.id;
+	var tid = req.params.tid;
+	var current = parseInt(req.body.upvote);
+	var added = current+1;
+
+	db.run('UPDATE threads SET upvotes=? WHERE threads_id=?',added, tid, function(err){
+
 		res.redirect('/forums/'+id+'/thread/'+tid);
 	})
 
 })
 
-// app.post('/forums/:id/upvote/:tid', function(req, res){
-// 	var id = req.params.id;
-// 	var tid = req.params.tid;
 
-// 	db.
-// })
 
+
+app.get('/forums/:id/search/:tid', function(req, res){
+	console.log("hello");
+	var id = req.params.id;
+	var tid = req.params.tid;
+	var secrets = JSON.parse(fs.readFileSync('secrets.json', 'utf8'));
+	var key = secrets.id;
+	var search = req.query.search;
+	var url = "https://api.instagram.com/v1/tags/"+search+"/media/recent?client_id="+key;
+
+	request.get(url, function(err, response, body){
+		var parsed = JSON.parse(body);
+		console.log(parsed);
+		var data = parsed.data;
+		console.log(data);
+		var imageArray = [];
+		data.forEach(function(post){
+			imageArray.push(post.images.standard_resolution.url)
+		})
+		db.all('SELECT * FROM subforums', function(err, rows){			//grabbing id of user instead of thread?
+				if(err){
+					throw err;
+				}
+		res.render('search.ejs', {picture: imageArray, subs:rows, id:id})
+	});
+	});
+})
+
+
+
+
+app.get('/forums/:id/gallery/:tid', function(req, res){
+	var id = req.params.id;
+	var tid = req.params.tid;
+
+	db.all('SELECT * FROM images WHERE thread_idi=?', tid, function(err, rows){
+		if(err){
+			throw err;
+		}
+		db.all('SELECT * FROM subforums', function(err, subs){			//grabbing id of user instead of thread?
+				if(err){
+					throw err;
+				}
+		res.render('gallery.ejs', {id:id, picture:rows, subs: subs})
+		})
+	})
+})
+
+
+
+
+app.post('/forums/:id/gallery/:tid', function(req, res){
+	var id = req.params.id;
+	var tid = req.params.tid;
+	var url = req.body.url;
+
+	db.run('INSERT INTO images (url, thread_idi, user_idi) VALUES (?, ?, ?)', url, tid, id, function(err){
+		if(err){
+			throw err;
+		}
+		res.redirect('/forums/' + id + '/gallery/' + tid)
+	})
+})
 
 
 

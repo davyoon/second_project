@@ -24,7 +24,7 @@
 							<ul class="pure-menu-children">
 
 							<% subs.forEach(function(sub){ %>
-								<li class="pure-menu-item"><a href='/forums/<%=userID%>/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
+								<li class="pure-menu-item"><a href='/forums/<%=id%>/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
 									</a>
 								</li>	
 								<% }) %>
@@ -37,8 +37,12 @@
 
 
 			<div class="pure-u-1-1">
-				<div class="pure-u-1-1 banner">
-					<img src="/banner.png">
+				<div class="pure-u-5-24">
+				</div>
+				<div class="pure-u-14-24 banner">
+					<img class="pure-img" src="/banner.png">
+				</div>
+				<div class="pure-u-5-24">
 				</div>
 			</div>
 
@@ -46,7 +50,11 @@
 			
 			<div class="pure-u-1-1">
 				<div class="pure-u-1-1 title">
-					<h1>Welcome to the thread for <%= sub.topic %></h1>
+					<h1 class="welcome">Welcome to the forum for <%= sub.topic %></h1>
+				</div>
+				<br><br>
+				<div class="bar">
+					
 				</div>
 
 				<div class="cont">

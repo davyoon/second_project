@@ -28,7 +28,7 @@ CREATE TABLE subforums (
 
 CREATE TABLE images (
   images_id INTEGER PRIMARY KEY autoincrement,
-  url TEXT, 
+  url VARCHAR, 
   thread_idi INTEGER,
  	user_idi INTEGER,
  	FOREIGN KEY(thread_idi) REFERENCES threads(threads_id),

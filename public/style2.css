@@ -1,0 +1,21 @@
+.container{
+	background: black;
+	margin-top: 60px;
+
+}
+
+.login{
+	display: inline-block;
+	text-align: right;
+}
+
+.banner{
+	text-align: center;
+}
+
+.clickT{
+	font-size: 30px;
+}
+
+
+

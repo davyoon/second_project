@@ -7,6 +7,8 @@
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 	<link rel="stylesheet" href="http://localhost:3000/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
 </head>
 <body>
 	
@@ -24,7 +26,7 @@
 							<ul class="pure-menu-children">
 
 							<% subs.forEach(function(sub){ %>
-								<li class="pure-menu-item"><a href='/forums/<%=userID%>/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
+								<li class="pure-menu-item"><a href='/forums/<%=id%>/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
 									</a>
 								</li>	
 								<% }) %>
@@ -37,8 +39,12 @@
 
 
 			<div class="pure-u-1-1">
-				<div class="pure-u-1-1 banner">
-					<img src="/banner.png">
+				<div class="pure-u-5-24">
+				</div>
+				<div class="pure-u-14-24 banner">
+					<img class="pure-img" src="/banner.png">
+				</div>
+				<div class="pure-u-5-24">
 				</div>
 			</div>
 
@@ -50,30 +56,51 @@
 
 				<div class="pure-u-1-1 desc">
 					<h3><%= thread.description %></h3><br>
-					
-					<form action='/forums/<%=id%>/gallery/<%=thread.threads_id%>' method='GET'>
-						<button>Gallery</button>
+				</div>
+		
+				<div class="pure-u-10-24">
+					<form action='/forums/<%=id%>/search/<%=thread.threads_id%>' method='GET'>
+						<input type="text" name="search">
+						<button class="pure-button">Pointless API</button>
 					</form>
-
-					<form  id="upvote" action='/forums/<%=id%>/upvote/<%=thread.threads_id%>?_method=PUT' method='POST'>
-						<input type='hidden' name='upvote' value='<%=thread.upvotes%>'>
-						<button>upvote</button>
+				</div>	
+					
+				<div class="pure-u-7-24">
+					<form action='/forums/<%=id%>/gallery/<%=thread.threads_id%>' method='POST'>
+						<input type="text" name="url">
+						<button class="pure-button">Add image</button>
 					</form>
 				</div>
+
+				<div class="pure-u-2-24">
+				</div>
+
+				<div class="pure-u-2-24">
+					<form  id="upvote" action='/forums/<%=id%>/upvote/<%=thread.threads_id%>?_method=PUT' method='POST'>
+						<input class="hide" type='hidden' name='upvote' value='<%=thread.upvotes%>'>
+						<button class="pure-button">upvote</button>
+					</form>
+				</div>
+
+				<div class="pure-u-2-24 gallery">
+					<a href="/forums/<%=id%>/gallery/<%=thread.threads_id%>" class="pure-button">Gallery</a>
+				</div>	
 				<hr>
 
 				<div class="cont">
-					
-					<h3> <%=thread.upvotes%></h3>
 
 					<% comments.forEach(function(comment){ %>
-						<p> <%=comment.comment%> <p><br>
-						<p class="status">&nbsp	&nbsp - commented by: <%=comment.name%> <br><br>
-						<hr><br>
-						
+						<div class="com">
+							<p class="comment"> <%=comment.comment%> </p><br>
+							<p class="status">&nbsp	&nbsp - commented by: <%=comment.name%> <br><br>
+			
+						</div>
+						<br><br>
 					<%	}) %>
 					
-					<br><br><br>
+					<br><br>
+					<hr>
+					<br><br>
 
 					<form action='/forums/<%=id%>/comment/<%=thread.threads_id%>' method='POST' class='pure-form pure-form-stacked'>
 						<fieldset>
