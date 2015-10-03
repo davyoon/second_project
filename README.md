@@ -1,6 +1,9 @@
 #Vacation Forum
 
-###This forum is specific to vacation spots.  Any user can create a new thread which will be about a new country and can write comments on existing threads.  Only the master user can edit or delete threads.  There will be a search bar that will search images and users can add the resulting images to a specific forum.  
+###This forum is specific to vacation spots. The forum has subforums which are countries, and threads in each subforums.  Any user can create a new subforum, create a new thread, comment, upvote, add image, and view gallery on each thread.  
+
+
+#### I used the pure framework and font-awesome for come icons.  I first attempted to use googe images api so a user can search images on the page and add them by clicking on them.  However, I failed to learn to use it and tried using twitter but most pictures aren't useful.
 
 
 
