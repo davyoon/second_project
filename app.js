@@ -4,7 +4,6 @@ var ejs = require('ejs');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var request = require('request');
-
 var methodOverride = require('method-override');
 var urlencodedBodyParser = bodyParser.urlencoded({extended: false});
 var sqlite3 = require('sqlite3').verbose();
