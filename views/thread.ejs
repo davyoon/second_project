@@ -7,13 +7,14 @@
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 	<link rel="stylesheet" href="http://localhost:3000/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 	<div class="container">
 		<div class="pure-g">
 			
-			
+			<!-- NAVBAR -->
 			<div class="pure-u-1-1">
 				<nav class="pure-menu-horizontal">
 					<ul class="pure-menu-list">
@@ -34,56 +35,58 @@
 					</ul>	
 				</nav>
 			</div>
+			<!-- NAVBAR -->
 
+			<!-- BANNER -->
+			<div class="pure-u-5-24">
+			</div>
+			<div class="pure-u-14-24 banner">
+				<img class="pure-img" src="/banner.png">
+			</div>
+			<div class="pure-u-5-24">
+			</div>
+			<!-- BANNER -->
 
-			<div class="pure-u-1-1">
-				<div class="pure-u-5-24">
-				</div>
-				<div class="pure-u-14-24 banner">
-					<img class="pure-img" src="/banner.png">
-				</div>
-				<div class="pure-u-5-24">
+			<!-- HEADING -->
+			<div class="pure-u-1-1 title">
+				<h1 class="heading">Welcome to the forum for <%= sub.topic %></h1>
+				<div class="bar">
 				</div>
 			</div>
-
+			<!-- HEADING -->
 
 			
-			<div class="pure-u-1-1">
-				<div class="pure-u-1-1 title">
-					<h1 class="welcome">Welcome to the forum for <%= sub.topic %></h1>
+			<div class="cont">
+			<!-- THREADS -->
+			<% threads.forEach(function(thread){ %>
+				<div class="pure-u-2-24">
 				</div>
-				<br><br>
-				<div class="bar">
-					
+				<div class="pure-u-20-24 threads">	
+					<a href='/forums/<%=id%>/thread/<%=thread.threads_id%>' class="clickT"><p> <%=thread.title%> </p>
+					</a>
+
+					<p class="status"> &nbsp &nbsp	-posted by: <strong><%= thread.name %></strong> || <i class="fa fa-thumbs-o-up"></i> <strong> <%=thread.upvotes%></strong> || <i class="fa fa-comment"></i> <strong><%=thread.counter%></strong>
+					</p>
 				</div>
+			<%	}) %>
+			<!-- THREADS	 -->
 
-				<div class="cont">
-					<% threads.forEach(function(thread){ %>
-					<div class="pure-u-21-24 threads">	
-						<a href='/forums/<%=id%>/thread/<%=thread.threads_id%>' class="clickT"><p> <%=thread.title%> </p>
-						</a>
-
-						<p class="status"> &nbsp &nbsp	-posted by: <strong><%= thread.name %></strong>    ||    <i class="fa fa-thumbs-o-up"></i> <strong> <%=thread.upvotes%></strong>    ||    <i class="fa fa-comment"></i> <strong><%=thread.counter%></strong>
-						</p><br><br>
-						<hr>
-					</div><br>
-					<%	}) %>
-					<br><br><br>
-					
-						<form action='/forums/<%=id%>/thread/<%=sub.subforums_id%>' method='POST' class="pure-form pure-form-stacked">
-							<fieldset>
-								<legend>Start new thread</legend>
-								<label for='thread'>Thread title</label>
-								<input type='text' name='name' placeholder='Title' id='thread'>
-								<label for="desc">Thread Description</label>
-								<textarea rows="4" cols="50" name="text" id="desc">
-								</textarea><br><br>
-								<button class="pure-button pure-button-primary">Start thread</button>
-							</fieldset>	
-						</form>
-					
-				</div>
-
+				<!-- NEW THREAD FORM -->
+				<div class="pure-u-1-1">
+					<form action='/forums/<%=id%>/thread/<%=sub.subforums_id%>' method='POST' class="pure-form pure-form-stacked">
+						<fieldset>
+							<p class="label">Start new thread</p>
+							<hr>
+							<label class="for" for='thread'>Thread title</label>
+							<input type='text' name='name' placeholder='Title' id='thread'>
+							<label class="for" for="desc">Thread Description</label>
+							<textarea rows="4" cols="50" name="text" id="desc">
+							</textarea><br><br>
+							<button class="pure-button pure-button-primary">Start thread</button>
+						</fieldset>	
+					</form>
+				</div>	
+				<!-- NEW THREAD FORM -->
 			</div>
 
 		</div>

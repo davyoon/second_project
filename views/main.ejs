@@ -5,6 +5,7 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="http://localhost:3000/style.css">
 
 </head>
@@ -12,41 +13,33 @@
 
 	<div class="container">
 		<div class="pure-g">
+			<!-- BANNER -->
+			<div class="pure-u-5-24">
+			</div>
+			<div class="pure-u-14-24 banner">
+				<img class="pure-img" src="banner.png">
+			</div>
+			<div class="pure-u-5-24">
+			</div>
+			<!-- BANNER -->
 
-			<div class="pure-u-1-1">
-				<form class="login" action='/forums' method='GET'>
+			<div class="pure-u-3-24">	
+			</div>
+			<!-- BODY -->
+			<div class="pure-u-18-24">
+				<div class="welcome">
+					<p class="welcome-message">
+						Welcome to the Vacation Forum.  You can discuss about your experience with various vacation spots with others and share your pictures in yourthread.  Simply log in and create your own subforum or create a thread in existing subforum.
+					</p>
+				</div>
+				<form class="pure-form login" action='/forums' method='GET'>
 					<input type='text' name='name' placeholder='Enter username' required>
-					<button>Log in</button>
+					<button class="pure-button">Log in</button>
 				</form>
 			</div>
-			
-			<div class="pure-u-1-1">
-				<div class="pure-u-5-24">
-				</div>
-				<div class="pure-u-14-24 banner">
-					<img class="pure-img" src="banner.png">
-				</div>
-				<div class="pure-u-5-24">
-				</div>
+			<!-- BODY -->
+			<div class="pure-u-3-24">	
 			</div>
-			
-			<div class="pure-u-1-1">
-				<div class="pure-u-5-24">
-				</div>
-				
-				<div class="pure-u-14-24 vid">
-					<video class="pure-img" autoplay>
-						<source src="vid.mp4" type="video/mp4">
-					</video>
-				</div>
-				
-				<div class="pure-u-5-24">
-				</div>
-
-			</div>
-			
-
-			
 		</div>
 	</div>
 

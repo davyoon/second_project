@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
 		<div class="pure-g">
-			
+			<!-- NAVBAR -->
 			<div class="pure-u-1-1">
 				<nav class="pure-menu-horizontal">
 					<ul class="pure-menu-list">
@@ -26,47 +26,32 @@
 									</a>
 								</li>	
 								<% }) %>
-
 							</ul>
 						</li>
 					</ul>
 				</nav>
 			</div>
+			<!-- NAVBAR -->
 
-
-			<div class="pure-u-1-1">
-				<div class="pure-u-5-24">
-				</div>
-
-				<div class="pure-u-14-24 banner">
-					<img class="pure-img" src="/banner.png">
-				</div>
-				<div class="pure-u-5-24">
-				</div>
+			<!-- BANNER -->
+			<div class="pure-u-5-24">
 			</div>
-			<br><br><br>
-
+			<div class="pure-u-14-24 banner">
+				<img class="pure-img" src="/banner.png">
+			</div>
+			<div class="pure-u-5-24">
+			</div>
+			<!-- BANNER -->
 			<div class="bar">
-					
 			</div>
-			 <br><br><br>
-			
+			<!-- PICTURES -->
 			<% picture.forEach(function(pic){ %>
-		
-			
-			<div class="pure-u-7-24 gal">
-				<img class="pure-img" src='<%=pic.url%>'>
-				
-			</div>
-			<br><br>
-			
+				<div class="pure-u-7-24 gallery">
+					<img class="pure-img" src='<%=pic.url%>'>	
+				</div>
 			<%	}); %>
-
-
+			<!-- PICTURES -->
 		</div>
-			<br><br><br>
 	</div>
-
-	
 </body>
 </html>

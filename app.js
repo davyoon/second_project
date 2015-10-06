@@ -22,13 +22,9 @@ app.get('/', function(req, res){
 });
 
 
-
-
 app.get('/login', function(req, res){
 	res.render('main.ejs')
 });
-
-
 
 
 app.get('/forums', function(req, res){
@@ -36,7 +32,6 @@ app.get('/forums', function(req, res){
 		db.run('INSERT INTO users (name) VALUES (?)', user, function(err){
 			if(err){
 				throw err;
-				
 			}else{
 				var userID = this.lastID;
 				db.all('SELECT * FROM subforums', function(err, rows){			//grabbing id of user instead of thread?
@@ -50,8 +45,6 @@ app.get('/forums', function(req, res){
 })
 
 
-
-
 app.get('/forums/:id/sub/:sid', function(req, res){		//id = user id   sid = subforum id
 	var id = req.params.id;
 	var sid = req.params.sid;
@@ -59,7 +52,6 @@ app.get('/forums/:id/sub/:sid', function(req, res){		//id = user id   sid = subf
 		if(err){
 			throw err;
 		}
-		console.log(threads);
 		db.get('SELECT * FROM subforums WHERE subforums_id=?', sid, function(err, rows){
 			if(err){
 				throw err;
@@ -68,14 +60,11 @@ app.get('/forums/:id/sub/:sid', function(req, res){		//id = user id   sid = subf
 				if(err){
 					throw err;
 				}
-		
 			res.render('thread.ejs', {threads: threads, sub: rows, id:id, subs: subs})
 			})
 		})
 	})
 })
-
-
 
 
 app.post('/forums/:id/new', function(req, res){
@@ -91,8 +80,6 @@ app.post('/forums/:id/new', function(req, res){
 })
 
 
-
-
 app.post('/forums/:id/thread/:sid', function(req, res){
 	var id = req.params.id;
 	var sid = req.params.sid;
@@ -106,8 +93,6 @@ app.post('/forums/:id/thread/:sid', function(req, res){
 		res.redirect('/forums/'+id+'/sub/'+sid);
 	})
 })
-
-
 
 
 app.post('/forums/:id/comment/:tid', function(req, res){
@@ -130,12 +115,9 @@ app.post('/forums/:id/comment/:tid', function(req, res){
 })
 
 
-
-
 app.get('/forums/:id/thread/:tid', function(req, res){
 	var id = req.params.id;
 	var tid = req.params.tid;
-	console.log("thread id is : "+ tid);
 
 	db.get('SELECT * FROM threads WHERE threads_id=?', tid, function(err, thread){
 		if(err){
@@ -156,8 +138,6 @@ app.get('/forums/:id/thread/:tid', function(req, res){
 })
 
 
-
-
 app.put('/forums/:id/upvote/:tid', function(req, res){
 	var id = req.params.id;
 	var tid = req.params.tid;
@@ -168,39 +148,7 @@ app.put('/forums/:id/upvote/:tid', function(req, res){
 
 		res.redirect('/forums/'+id+'/thread/'+tid);
 	})
-
 })
-
-
-
-
-app.get('/forums/:id/search/:tid', function(req, res){
-	console.log("hello");
-	var id = req.params.id;
-	var tid = req.params.tid;
-	var secrets = JSON.parse(fs.readFileSync('secrets.json', 'utf8'));
-	var key = secrets.id;
-	var search = req.query.search;
-	var url = "https://api.instagram.com/v1/tags/"+search+"/media/recent?client_id="+key;
-
-	request.get(url, function(err, response, body){
-		var parsed = JSON.parse(body);
-		console.log(parsed);
-		var data = parsed.data;
-		console.log(data);
-		var imageArray = [];
-		data.forEach(function(post){
-			imageArray.push(post.images.standard_resolution.url)
-		})
-		db.all('SELECT * FROM subforums', function(err, rows){			//grabbing id of user instead of thread?
-				if(err){
-					throw err;
-				}
-		res.render('search.ejs', {picture: imageArray, subs:rows, id:id})
-	});
-	});
-})
-
 
 
 
@@ -222,8 +170,6 @@ app.get('/forums/:id/gallery/:tid', function(req, res){
 })
 
 
-
-
 app.post('/forums/:id/gallery/:tid', function(req, res){
 	var id = req.params.id;
 	var tid = req.params.tid;
@@ -238,21 +184,6 @@ app.post('/forums/:id/gallery/:tid', function(req, res){
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.listen(3000, function(){
-	
 	console.log('listening on port 3000!')
 });

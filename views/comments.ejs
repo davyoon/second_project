@@ -5,22 +5,21 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="http://localhost:3000/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-
 </head>
 <body>
 	
 <div class="container">
 		<div class="pure-g">
 			
-			
+			<!-- NAVBAR -->
 			<div class="pure-u-1-1">
 				<nav class="pure-menu-horizontal">
 					<ul class="pure-menu-list">
-						<li class="pure-menu-item pure-menu-selected"><a href="/forums" class="pure-menu-link">Home</a></li>
-						<li class="pure-menu-item pure-menu-selected"><a href="/login" class="pure-menu-link">Log out</a></li>
+						<li class="pure-menu-item"><a href="/forums" class="pure-menu-link">Home</a></li>
+						<li class="pure-menu-item"><a href="/login" class="pure-menu-link">Log out</a></li>
 						<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
 							<a href="#" id="menulink1" class="pure-menu-link">Sub Forums</a>
 							<ul class="pure-menu-children">
@@ -36,84 +35,83 @@
 					</ul>	
 				</nav>
 			</div>
+			<!-- NAVBAR -->
 
-
-			<div class="pure-u-1-1">
-				<div class="pure-u-5-24">
-				</div>
-				<div class="pure-u-14-24 banner">
-					<img class="pure-img" src="/banner.png">
-				</div>
-				<div class="pure-u-5-24">
-				</div>
+			<!-- BANNER -->
+			<div class="pure-u-5-24">
 			</div>
+			<div class="pure-u-14-24 banner">
+				<img class="pure-img" src="/banner.png">
+			</div>
+			<div class="pure-u-5-24">
+			</div>
+			<!-- BANNER -->
 
-			
-			<div class="pure-u-1-1">
-				<div class="pure-u-1-1 title">
-					<h1><%= thread.title %></h1><br><br>
-				</div>
+			<!-- TITLE -->
+			<div class="pure-u-1-1 title">
+				<p><%= thread.title %></p>
+			</div>
+			<!-- TITLE -->
 
-				<div class="pure-u-1-1 desc">
-					<h3><%= thread.description %></h3><br>
-				</div>
-		
-				<div class="pure-u-9-24">
-					<form action='/forums/<%=id%>/search/<%=thread.threads_id%>' method='GET'>
-						<input type="text" name="search">
-						<button class="pure-button">Pointless API</button>
-					</form>
-				</div>	
-					
-				<div class="pure-u-9-24">
-					<form action='/forums/<%=id%>/gallery/<%=thread.threads_id%>' method='POST'>
+			<!-- ENTRY -->
+			<div class="pure-u-1-1 desc">
+				<p class="desc-font"><%= thread.description %></p>
+			</div>	
+			<!-- ENTRY -->
+			<div class="bar"></div>
+			<!-- BUTTONS	 -->
+			<div class="pure-u-1-1 stuff">
+				<div class="pure-u-12-24">
+					<form action='/forums/<%=id%>/gallery/<%=thread.threads_id%>' method='POST' class="pure-form image-form">
 						<input type="text" name="url">
 						<button class="pure-button">Add image</button>
 					</form>
 				</div>
-
-				<div class="pure-u-1-24">
-				</div>
-
-				<div class="pure-u-2-24">
+				<div class="pure-u-9-24">
 					<form  id="upvote" action='/forums/<%=id%>/upvote/<%=thread.threads_id%>?_method=PUT' method='POST'>
 						<input class="hide" type='hidden' name='upvote' value='<%=thread.upvotes%>'>
-						<button class="pure-button">upvote</button>
-					</form>
-				</div>
-
-				<div class="pure-u-2-24 gallery">
-					<a href="/forums/<%=id%>/gallery/<%=thread.threads_id%>" class="pure-button">Gallery</a>
-				</div>	
-				<hr>
-
-				<div class="cont">
-
-					<% comments.forEach(function(comment){ %>
-						<div class="com">
-							<p class="comment"> <%=comment.comment%> </p><br>
-							<p class="status">&nbsp	&nbsp - commented by: <%=comment.name%> <br><br>
-			
+						<div class="thumbs">
+							<i class="fa fa-thumbs-o-up"></i> <strong> <%=thread.upvotes%></strong>
 						</div>
-						<br><br>
-					<%	}) %>
-					
-					<br><br>
-					<hr>
-					<br><br>
-
-					<form action='/forums/<%=id%>/comment/<%=thread.threads_id%>' method='POST' class='pure-form pure-form-stacked'>
-						<fieldset>
-							<label for='thread'>Enter comment</label><br><br>
-							<textarea rows="3" cols="35" name="text">
-							</textarea><br><br>
-							<button class="pure-button pure-button-primary">Submit</button>
-						</fieldset>	
+						<button class="pure-button upvote">upvote</button>
 					</form>
 				</div>
+				<div class="pure-u-2-24">
+					<a class="gallery-button pure-button" href="/forums/<%=id%>/gallery/<%=thread.threads_id%>">Gallery</a>
+				</div>
+			</div>		
+			<!-- BUTTONS -->
 
-
+			
+			<div class="cont">
+			<!-- COMMENTS -->
+			<% comments.forEach(function(comment){ %>
+				<div class="pure-u-2-24">
+				</div>
+				<div class="pure-u-20-24 com">
+					<p class="comment"> <%=comment.comment%> </p>
+					<p class="status">&nbsp	&nbsp - commented by: <%=comment.name%> 
+					</p>
+				</div>
+			<%	}) %>
+			<!-- COMMENTS -->
+			<hr>
+			<!-- NEW COMMENT FORM -->
+			<div class="pure-u-1-1">
+				<form action='/forums/<%=id%>/comment/<%=thread.threads_id%>' method='POST' class='pure-form pure-form-stacked'>
+					<fieldset>
+						<label class="label" for='thread'>Enter comment</label><br><br>
+						<textarea rows="3" cols="35" name="text">
+						</textarea>
+						<button class="pure-button pure-button-primary">Submit</button>
+					</fieldset>	
+				</form>
 			</div>
+			<!-- NEW COMMENT FORM -->
+		</div>
+
+
+			
 
 		</div>
 	</div>
