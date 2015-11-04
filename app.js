@@ -126,6 +126,7 @@ app.get('/forums/:id/thread/:tid', function(req, res){
 			if(err){
 				throw err;
 			}
+			console.log(rows)
 			db.all('SELECT * FROM subforums', function(err, subs){			//grabbing id of user instead of thread?
 				if(err){
 					throw err;
