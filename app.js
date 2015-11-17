@@ -9,7 +9,8 @@ var urlencodedBodyParser = bodyParser.urlencoded({extended: false});
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('forums.db');
 
-app.use(urlencodedBodyParser);
+app.use(urlencodedBodyParser)
+;
 
 app.use(methodOverride('_method'));
 app.use(express.static('public'));
