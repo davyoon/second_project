@@ -26,9 +26,6 @@ app.get('/login', function(req, res){
 });
 
 
-
-
-
 app.get('/forums', function(req, res){
 	var user = req.query.name;
 		db.run('INSERT INTO users (name) VALUES (?)', user, function(err){
