@@ -35,6 +35,13 @@
 			</div>
 			<!-- NAVBAR -->
 
+			<div class="pure-u-1-1">
+				<form class="pure-form subforum-form" action='/forums/<%=userID%>/new' method='POST'>
+					<label for='thread' class="label">Create new subforum</label><br><br>
+					<input type='text' name='name' placeholder='subforum name' id='thread' class="pure-input">
+					<button class="pure-button">Start subforum</button>
+				</form>
+			</div>	
 			<!-- BANNER -->
 			<div class="pure-u-5-24">
 			</div>
@@ -55,13 +62,6 @@
 			<!-- BODY/PICTURES -->
 			
 			
-			<div class="pure-u-1-1">
-				<form class="pure-form subforum-form" action='/forums/<%=userID%>/new' method='POST'>
-					<label for='thread' class="label">Create new subforum</label><br><br>
-					<input type='text' name='name' placeholder='subforum name' id='thread' class="pure-input">
-					<button class="pure-button">Start subforum</button>
-				</form>
-			</div>	
 
 		</div>
 	</div>

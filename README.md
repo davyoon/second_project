@@ -1,16 +1,34 @@
-#Vacation Forum
+#TRAVEL INSIGHT
 
-###This forum is specific to vacation spots. The forum has subforums which are countries, and threads in each subforums.  Any user can create a new subforum, create a new thread, comment, upvote, add image, and view gallery on each thread.  
+Travel Insight is a forum where users create subforums, threads, and comment about their personal experience on their vacation spots. Subforums are categorized by different countries and threads are categorized by different resorts/place they stayed.  Users can also upvote each thread.
 
+##Minimum Viable Product
+*Create subforums
+*Create threads
+*Enable commenting on threads
+*Enable users to upvote threads
 
-#### I used the pure framework and font-awesome for come icons.  I first attempted to use googe images api so a user can search images on the page and add them by clicking on them.  However, I failed to learn to use it and tried using twitter but most pictures aren't useful.
-
-
-
-![ERD](readme_pic/erd.jpg)
+##Wireframe
 ![ERD](readme_pic/wireframe.jpg)
 
+##ERD
+![ERD](readme_pic/erd.jpg)
 
+##Technologies
+*HTML/CSS
+*JavaScript
+*Pure.css
+*Node.js
+*Express.js
+*SQLite3
+*Font-awesome
+
+##Features
+*Create subforums
+*Create threads
+*Enable commenting on threads
+*Enable users to upvote threads
+*Add images to each thread
 
 
 
