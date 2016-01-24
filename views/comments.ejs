@@ -4,50 +4,120 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="/style.css">
-	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-	<link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
 </head>
 <body>
 	
-<div class="container">
-		<div class="pure-g">
+
 			
 			<!-- NAVBAR -->
-			<div class="pure-u-1-1">
-				<nav class="pure-menu-horizontal">
-					<ul class="pure-menu-list">
-						<li class="pure-menu-item"><a href="/forums" class="pure-menu-link">Home</a></li>
-						<li class="pure-menu-item"><a href="/login" class="pure-menu-link">Log out</a></li>
-						<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-							<a href="#" id="menulink1" class="pure-menu-link">Sub Forums</a>
-							<ul class="pure-menu-children">
-
-							<% subs.forEach(function(sub){ %>
-								<li class="pure-menu-item"><a href='/forums/<%=id%>/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
-									</a>
-								</li>	
-								<% }) %>
-
-							</ul>
-						</li>
-					</ul>	
-				</nav>
-			</div>
+	<div class="ui small menu">
+		<img src="/photos/logo.png" class="item" width="150" height="50">
+			
+		<div class="right menu">
+			<select class="ui search dropdown item select" onChange="window.location.href=this.value">
+				<option value="">Subforums</option>
+				<% subs.forEach(function(sub){ %>
+				<option value="/forums/sub/<%=sub.subforums_id%>"> <%= sub.topic %> </option>
+				<% }) %>
+			</select>
+			<img src="<%=image%>" width="60" height="50">
+			<a class="ui inverted red button" id="logout" href="/logout">LOG OUT</a>
+		</div>
+	</div>
 			<!-- NAVBAR -->
+	<div class="ui centered grid" id="thread-container">
+		<div class="fourteen wide column">
+			<div class="ui items">
+			  <div class="item">
+			    <div class="image">
+			      <img src="<%=image%>">
+			    </div>
+			    <div class="content">
+			      <p class="header"><%= thread.title %></p>
+			      <div class="meta">
+			        <span>by: {{enter user name}}</span>
+			      </div>
+			      <div class="description">
+			        <p><%= thread.description %></p>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 
-			<!-- BANNER -->
-			<div class="pure-u-5-24">
-			</div>
-			<div class="pure-u-14-24 banner">
-				<img class="pure-img" src="/banner.png">
-			</div>
-			<div class="pure-u-5-24">
-			</div>
-			<!-- BANNER -->
+			<div class='ui horizontal divider'><i class='road icon'></i></div>
 
-			<!-- TITLE -->
+
+			<div class="ui grid">
+				<div class="eight wide column">
+					<form action='/forums/gallery/<%=thread.threads_id%>' method='POST' class="ui form">
+						<div class="field">
+							<div class="two fields">
+								<div class="field">
+									<input type="text" name="url">
+								</div>
+								<div class="field">
+									<button class="ui primary button">Add image</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<div class="eight wide column">
+					<div class="ui grid">
+						<div class="six wide column"></div>
+						<div class="six wide column">
+							<form  id="upvote" action='/forums/upvote/<%=thread.threads_id%>?_method=PUT' method='POST' class="ui form">
+								<input class="hide" type='hidden' name='upvote' value='<%=thread.upvotes%>'>
+								<div class="ui labeled button" tabindex="0"> 
+									<button class="ui red button"> <i class="heart icon"></i> 
+										Like 
+									</button> 
+									<p class="ui basic red left pointing label"> <%=thread.upvotes%> </p>
+								</div>
+							</form>
+						</div>
+						<div class="four wide column">
+							<a class="ui green button" href="/forums/gallery/<%=thread.threads_id%>">Gallery</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ui minimal comments">
+ 				<h3 class="ui dividing header">Comments</h3>
+ 				<% comments.forEach(function(comment){ %>
+  				<div class="comment">
+    				<a class="avatar">
+      				<img src="<%=image%>">
+    				</a>
+    				<div class="content">
+      				<a class="author"><%=comment.name%></a>
+      				<div class="metadata">
+       	 			<span class="date">Today at 5:42PM</span>
+      				</div>
+      				<div class="text">
+       	 				<%=comment.comment%>
+      				</div> 
+						</div>
+					</div>
+				<%	}) %>
+  			<form action='/forums/comment/<%=thread.threads_id%>' method='POST' class="ui reply form">
+    			<div class="field">
+     	 			<textarea name="text"></textarea>
+    			</div>
+    			<button class="ui blue labeled submit icon button">
+      			<i class="icon edit"></i> Add Reply
+    			</button>
+  			</form>
+			</div>	
+
+		</div>
+	</div>	
+
+
+
 			<div class="pure-u-1-1 title">
 				<p><%= thread.title %></p>
 			</div>
@@ -62,13 +132,13 @@
 			<!-- BUTTONS	 -->
 			<div class="pure-u-1-1 stuff">
 				<div class="pure-u-12-24">
-					<form action='/forums/<%=id%>/gallery/<%=thread.threads_id%>' method='POST' class="pure-form image-form">
+					<form action='/forums/gallery/<%=thread.threads_id%>' method='POST' class="pure-form image-form">
 						<input type="text" name="url">
 						<button class="pure-button">Add image</button>
 					</form>
 				</div>
 				<div class="pure-u-9-24">
-					<form  id="upvote" action='/forums/<%=id%>/upvote/<%=thread.threads_id%>?_method=PUT' method='POST'>
+					<form  id="upvote" action='/forums/upvote/<%=thread.threads_id%>?_method=PUT' method='POST'>
 						<input class="hide" type='hidden' name='upvote' value='<%=thread.upvotes%>'>
 						<div class="thumbs">
 							<i class="fa fa-thumbs-o-up"></i> <strong> <%=thread.upvotes%></strong>
@@ -77,7 +147,7 @@
 					</form>
 				</div>
 				<div class="pure-u-2-24">
-					<a class="gallery-button pure-button" href="/forums/<%=id%>/gallery/<%=thread.threads_id%>">Gallery</a>
+					<a class="gallery-button pure-button" href="/forums/gallery/<%=thread.threads_id%>">Gallery</a>
 				</div>
 			</div>		
 			<!-- BUTTONS -->
@@ -98,7 +168,7 @@
 			<hr>
 			<!-- NEW COMMENT FORM -->
 			<div class="pure-u-1-1">
-				<form action='/forums/<%=id%>/comment/<%=thread.threads_id%>' method='POST' class='pure-form pure-form-stacked'>
+				<form action='/forums/comment/<%=thread.threads_id%>' method='POST' class='pure-form pure-form-stacked'>
 					<fieldset>
 						<label class="label" for='thread'>Enter comment</label><br><br>
 						<textarea rows="3" cols="35" name="text">
@@ -117,6 +187,8 @@
 	</div>
 
 
-	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+<script src="/script.js"></script>
 </body>
 </html>

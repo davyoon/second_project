@@ -4,105 +4,70 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="/style.css">
-	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
 </head>
 <body>
-
-	<div class="container">
-		<div class="pure-g">
+	<div class="ui small menu">
+		<img src="/photos/logo.png" class="item" width="150" height="50">
 			
-			<!-- NAVBAR -->
-			<div class="pure-u-1-1">
-				<nav class="pure-menu-horizontal">
-					<ul class="pure-menu-list">
-						<li class="pure-menu-item pure-menu-selected"><a href="/forums" class="pure-menu-link">Home</a></li>
-						<li class="pure-menu-item pure-menu-selected"><a href="/login" class="pure-menu-link">Log out</a></li>
-						<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-							<a href="#" id="menulink1" class="pure-menu-link">Sub Forums</a>
-							<ul class="pure-menu-children">
-
-							<% subs.forEach(function(sub){ %>
-								<li class="pure-menu-item"><a href='/forums/<%=id%>/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
-									</a>
-								</li>	
-								<% }) %>
-
-							</ul>
-						</li>
-					</ul>	
-				</nav>
-			</div>
-			<!-- NAVBAR -->
-
-			<!-- BANNER -->
-			<div class="pure-u-5-24">
-			</div>
-			<div class="pure-u-14-24 banner">
-				<img class="pure-img" src="/banner.png">
-			</div>
-			<div class="pure-u-5-24">
-			</div>
-			<!-- BANNER -->
-
-			<!-- HEADING -->
-			<div class="pure-u-1-1 title">
-				<h1 class="heading">Welcome to the forum for <%= sub.topic %></h1>
-				<div class="bar">
-				</div>
-			</div>
-			<!-- HEADING -->
-
-			
-			<div class="cont">
-			<!-- THREADS -->
-			<% threads.forEach(function(thread){ %>
-				<div class="pure-u-2-24">
-				</div>
-				<div class="pure-u-20-24 threads">	
-					<a href='/forums/<%=id%>/thread/<%=thread.threads_id%>' class="clickT"><p> <%=thread.title%> </p>
-					</a>
-
-					<p class="status"> &nbsp &nbsp	-posted by: <strong><%= thread.name %></strong> || <i class="fa fa-thumbs-o-up"></i> <strong> <%=thread.upvotes%></strong> || <i class="fa fa-comment"></i> <strong><%=thread.counter%></strong>
-					</p>
-				</div>
-			<%	}) %>
-			<!-- THREADS	 -->
-
-				<!-- NEW THREAD FORM -->
-				<div class="pure-u-1-1">
-					<form action='/forums/<%=id%>/thread/<%=sub.subforums_id%>' method='POST' class="pure-form pure-form-stacked">
-						<fieldset>
-							<p class="label">Start new thread</p>
-							<hr>
-							<label class="for" for='thread'>Thread title</label>
-							<input type='text' name='name' placeholder='Title' id='thread'>
-							<label class="for" for="desc">Thread Description</label>
-							<textarea rows="4" cols="50" name="text" id="desc">
-							</textarea><br><br>
-							<button class="pure-button pure-button-primary">Start thread</button>
-						</fieldset>	
-					</form>
-				</div>	
-				<!-- NEW THREAD FORM -->
-			</div>
-
+		<div class="right menu">
+			<select class="ui search dropdown item select" onChange="window.location.href=this.value">
+				<option value="">Subforums</option>
+				<% subs.forEach(function(sub){ %>
+				<option value="/forums/sub/<%=sub.subforums_id%>"> <%= sub.topic %> </option>
+				<% }) %>
+			</select>
+			<img src="<%=image%>" width="60" height="50">
+			<a class="ui inverted red button" id="logout" href="/logout">LOG OUT</a>
 		</div>
-	</div>	
+	</div>
 
+	<div class="ui centered grid" id="thread-container">
+		<div class="fourteen wide column">
+			<div class="ui inverted segment">sdlfj sdflkjsdjfsdfasdfs</div>
+			<table class="ui blue table">
+			  <thead>
+			    <tr><th></th>
+			    <th>Comments</th>
+			    <th>Upvotes</th>
+			    <th>Posted by</th>
+			    <th></th>
+			  </tr>
+				</thead>
+			  <tbody>
+			  	<% threads.forEach(function(thread){ %>
+			    <tr>
+			      <td><i class="square icon"></i><a href='/forums/thread/<%=thread.threads_id%>' class="thread"><%=thread.title%></a></td>
+			      <td><%=thread.counter%></td>
+			      <td><%=thread.upvotes%></td>
+			      <td><img src="<%=image%>" class="ui tiny image"></td>
+			      <td>
+			      	<p><%= thread.name %></p>
+							<p>1/3/2015</p>
+			      </td>
+			    </tr>
+			    <% }) %>
+			  </tbody>
+			</table>
 
-
-
-
-
-
-
-	
-
+			<div class="ui inverted segment">
+				<form class="ui inverted form" action='/forums/thread/<%=sub.subforums_id%>' method='POST'>
+					<div class="field">
+						<p>Start new thread</p>
+    			   <label>Thread Title</label>
+    			   <input placeholder="Title" type="text" name='name'>
+    			   <label>Thread Description</label>
+    			   <textarea placeholder="Description" type="text" name='text'></textarea>
+    			 </div>
+    			<button class="ui primary button">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
 
 		
-	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+<script src="/script.js"></script>	
 </body>
 </html>

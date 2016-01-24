@@ -1,9 +1,9 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('forums.db');
 
-db.run("INSERT INTO users (name) VALUES (?), (?)", 
-	"David", 
-	"Luis",
+db.run("INSERT INTO users (name, user_id) VALUES (?, ?), (?, ?)", 
+	"David", 1, 
+	"Luis", 2,
 	function(err){
 		if(err){
 			throw err;

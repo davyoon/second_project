@@ -5,8 +5,11 @@ DROP TABLE IF EXISTS subforums;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-	users_id INTEGER PRIMARY KEY autoincrement,
-	name TEXT
+	id INTEGER PRIMARY KEY,
+	user_id INTEGER,
+	access_token VARCHAR(255),
+	name VARCHAR(255),
+	image TEXT
 );
 
 CREATE TABLE threads (

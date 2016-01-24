@@ -1,9 +1,71 @@
-body{
-	background-image: url('bg2.jpg');
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
+/*.main{
+	height: 100%;
+	background-image: url('green_dust.png');
+}*/
+
+#owl-demo .item{
+  margin: 3px;
 }
+#owl-demo .item img{
+  display: block;
+  width: 100%;
+  height: 250px;
+}
+
+#logout{
+	padding-top: 17px;
+	margin-left: 20px;
+}
+
+.login-message{
+	text-align: center;
+}
+
+.topic{
+	font-size: 1.2em;
+	margin-left: 12px;
+	font-family: arial, helvetica;
+	font-weight: bold;
+	color: #585858;
+}
+
+.rows:hover{
+	background-color: #c2c2d6;
+}
+
+#topic-container{
+	margin-top: 50px;
+	font-family: verdana;
+	color: #585858;
+}
+
+.select{
+	width: 120px;
+	margin: 5px 10px;
+}
+
+#thread-container{
+	margin-top: 50px;
+	font-family: verdana;
+	color: #585858;
+}
+
+.thread{
+	font-size: 1.2em;
+	margin-left: 12px;
+	font-family: arial, helvetica;
+	font-weight: bold;
+	color: #585858;
+}
+
+
+
+
+
+
+
+
+
 
 .pure-g{
 	width: 80%;
@@ -185,10 +247,11 @@ nav{
 /*.images{
 	width: 700px;
 	height: 600px;
-}*/
+}
 
 
 
 
 
 
+*/

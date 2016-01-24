@@ -15,14 +15,14 @@
 				<nav class="pure-menu-horizontal">
 					<ul class="pure-menu-list">
 						<li class="pure-menu-item pure-menu-selected"><a href="/forums" class="pure-menu-link">Home</a></li>
-						<li class="pure-menu-item pure-menu-selected"><a href="/login" class="pure-menu-link">Log out</a></li>
+						<li class="pure-menu-item pure-menu-selected"><a href="/logout" class="pure-menu-link">Log out</a></li>
 
 						<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
 							<a href="#" id="menulink1" class="pure-menu-link">Sub Forums</a>
 							<ul class="pure-menu-children">
 
 							<% subs.forEach(function(sub){ %>
-								<li class="pure-menu-item"><a href='/forums/<%=id%>/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
+								<li class="pure-menu-item"><a href='/forums/sub/<%=sub.subforums_id%>' class="pure-menu-link"> <%= sub.topic %>
 									</a>
 								</li>	
 								<% }) %>
