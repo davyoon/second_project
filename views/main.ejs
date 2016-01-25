@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="ui centered grid" id="topic-container">
-		<div class="twelve wide column">
+		<div class="fourteen wide column">
 			<table class="ui blue table">
 			  <thead>
 			    <tr><th></th>
@@ -36,7 +36,7 @@
 			  	<% subs.forEach(function(sub){ %>
 			    <tr class="rows">
 			      <td><i class="road icon"></i><a href='/' class="topic"><%= sub.topic %></a></td>
-			      <td><img src="/photos/<%=sub.creator%>" width="70" height="50"></td>
+			      <td><img src="<%=sub.creator%>" width="70" height="50"></td>
 			      <td><%= sub.time %></td>
 			    </tr>
 			    <% }) %>

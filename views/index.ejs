@@ -31,7 +31,7 @@
 			  	<% subs.forEach(function(sub){ %>
 			    <tr>
 			      <td><i class="road icon"></i><a href='/forums/sub/<%=sub.subforums_id%>' class="topic"><%= sub.topic %></a></td>
-			      <td><img src="/photos/<%=sub.creator%>" width="70" height="50"></td>
+			      <td><img src="<%=sub.creator%>" width="70" height="50"></td>
 			      <td><%= sub.time %></td>
 			    </tr>
 			    <% }) %>

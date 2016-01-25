@@ -31,12 +31,12 @@
 			<div class="ui items">
 			  <div class="item">
 			    <div class="image">
-			      <img src="<%=image%>">
+			      <img src="<%=thread.creator%>">
 			    </div>
 			    <div class="content">
 			      <p class="header"><%= thread.title %></p>
 			      <div class="meta">
-			        <span>by: {{enter user name}}</span>
+			        <span>by: <%= thread.name %></span>
 			      </div>
 			      <div class="description">
 			        <p><%= thread.description %></p>

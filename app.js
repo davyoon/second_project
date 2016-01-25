@@ -134,11 +134,10 @@ app.get('/forums/sub/:sid', function(req, res){		//id = user id   sid = subforum
 
 app.post('/forums/new', ensureAuthenticated, function(req, res){
 	var topic = req.body.name;
-	var date = moment().format('lll')
+	var date = moment().format('lll');
+	var image = req.user.image;
 
-	console.log(date)
-
-	db.run('INSERT INTO subforums (topic, time) VALUES (?, ?)', topic, date, function(err){
+	db.run('INSERT INTO subforums (topic, time, creator) VALUES (?, ?, ?)', topic, date, image, function(err){
 		if(err){
 			throw err;
 		}
@@ -152,8 +151,10 @@ app.post('/forums/thread/:sid', ensureAuthenticated, function(req, res){
 	var sid = req.params.sid;
 	var name = req.body.name;
 	var text = req.body.text;
+	var date = moment().format('lll');
+	var image = req.user.image;
 
-	db.run('INSERT INTO threads (description, title, upvotes, user_idt, sub_idt, counter) VALUES (?, ?, ?, ?, ?, ?)',text, name, 0, id, sid, 0, function(err){
+	db.run('INSERT INTO threads (description, title, upvotes, user_idt, sub_idt, counter, time, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',text, name, 0, id, sid, 0, date, image, function(err){
 		if(err){
 			throw err;
 		}
@@ -184,7 +185,7 @@ app.post('/forums/comment/:tid', function(req, res){
 app.get('/forums/thread/:tid', function(req, res){
 	var tid = req.params.tid;
 	var image = req.user.image;
-	db.get('SELECT * FROM threads WHERE threads_id=?', tid, function(err, thread){
+	db.get('SELECT * FROM threads INNER JOIN users ON threads.user_idt=users.user_id WHERE threads_id=?', tid, function(err, thread){
 		if(err){
 			throw err;
 		}

@@ -20,6 +20,8 @@ CREATE TABLE threads (
 	user_idt INTEGER,
 	sub_idt INTEGER,
 	counter INTEGER,
+	time VARCHAR(255),
+	creator VARCHAR(255),
 	FOREIGN KEY(user_idt) REFERENCES users(users_id),
 	FOREIGN KEY(sub_idt) REFERENCES subforums(subforums_id)
 );
