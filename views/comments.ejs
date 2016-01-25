@@ -27,7 +27,7 @@
 	</div>
 			<!-- NAVBAR -->
 	<div class="ui centered grid" id="thread-container">
-		<div class="fourteen wide column">
+		<div class="twelve wide column">
 			<div class="ui items">
 			  <div class="item">
 			    <div class="image">
@@ -115,77 +115,6 @@
 
 		</div>
 	</div>	
-
-
-
-			<div class="pure-u-1-1 title">
-				<p><%= thread.title %></p>
-			</div>
-			<!-- TITLE -->
-
-			<!-- ENTRY -->
-			<div class="pure-u-1-1 desc">
-				<p class="desc-font"><%= thread.description %></p>
-			</div>	
-			<!-- ENTRY -->
-			<div class="bar"></div>
-			<!-- BUTTONS	 -->
-			<div class="pure-u-1-1 stuff">
-				<div class="pure-u-12-24">
-					<form action='/forums/gallery/<%=thread.threads_id%>' method='POST' class="pure-form image-form">
-						<input type="text" name="url">
-						<button class="pure-button">Add image</button>
-					</form>
-				</div>
-				<div class="pure-u-9-24">
-					<form  id="upvote" action='/forums/upvote/<%=thread.threads_id%>?_method=PUT' method='POST'>
-						<input class="hide" type='hidden' name='upvote' value='<%=thread.upvotes%>'>
-						<div class="thumbs">
-							<i class="fa fa-thumbs-o-up"></i> <strong> <%=thread.upvotes%></strong>
-						</div>
-						<button class="pure-button upvote">upvote</button>
-					</form>
-				</div>
-				<div class="pure-u-2-24">
-					<a class="gallery-button pure-button" href="/forums/gallery/<%=thread.threads_id%>">Gallery</a>
-				</div>
-			</div>		
-			<!-- BUTTONS -->
-
-			
-			<div class="cont">
-			<!-- COMMENTS -->
-			<% comments.forEach(function(comment){ %>
-				<div class="pure-u-2-24">
-				</div>
-				<div class="pure-u-20-24 com">
-					<p class="comment"> <%=comment.comment%> </p>
-					<p class="status">&nbsp	&nbsp - commented by: <%=comment.name%> 
-					</p>
-				</div>
-			<%	}) %>
-			<!-- COMMENTS -->
-			<hr>
-			<!-- NEW COMMENT FORM -->
-			<div class="pure-u-1-1">
-				<form action='/forums/comment/<%=thread.threads_id%>' method='POST' class='pure-form pure-form-stacked'>
-					<fieldset>
-						<label class="label" for='thread'>Enter comment</label><br><br>
-						<textarea rows="3" cols="35" name="text">
-						</textarea>
-						<button class="pure-button pure-button-primary">Submit</button>
-					</fieldset>	
-				</form>
-			</div>
-			<!-- NEW COMMENT FORM -->
-		</div>
-
-
-			
-
-		</div>
-	</div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>

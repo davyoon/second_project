@@ -12,6 +12,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var moment = require('moment');
 
 //_____________passport
 passport.serializeUser(function(user, done){
@@ -133,8 +134,11 @@ app.get('/forums/sub/:sid', function(req, res){		//id = user id   sid = subforum
 
 app.post('/forums/new', ensureAuthenticated, function(req, res){
 	var topic = req.body.name;
+	var date = moment().format('lll')
 
-	db.run('INSERT INTO subforums (topic) VALUES (?)', topic, function(err){
+	console.log(date)
+
+	db.run('INSERT INTO subforums (topic, time) VALUES (?, ?)', topic, date, function(err){
 		if(err){
 			throw err;
 		}

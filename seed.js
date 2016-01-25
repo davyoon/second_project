@@ -1,9 +1,9 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('forums.db');
 
-db.run("INSERT INTO users (name, user_id) VALUES (?, ?), (?, ?)", 
-	"David", 1, 
-	"Luis", 2,
+db.run("INSERT INTO users (name, user_id, image) VALUES (?, ?, ?), (?, ?, ?)", 
+	"Bob", 1, "bob.png", 
+	"Spike", 2, "spike.png",
 	function(err){
 		if(err){
 			throw err;
@@ -21,10 +21,10 @@ db.run("INSERT INTO threads (description, title, upvotes, user_idt, sub_idt, cou
 		}
 	});
 
-db.run("INSERT INTO subforums (topic) VALUES (?), (?), (?)", 
-	"Mexico", 
-	"Bahamas",
-	"Dominica Republic",
+db.run("INSERT INTO subforums (topic, time, creator) VALUES (?, ?, ?), (?, ?, ?), (?, ?, ?)", 
+	"Mexico", "Oct 15, 2015 08:01 PM", "bob.png",  
+	"Bahamas", "Nov 22, 2015 6:45 PM", "bob.png",
+	"Dominica Republic", "December 11, 2015 10:36 AM", "spike.png", 
 	function(err){
 		if(err){
 			throw err;

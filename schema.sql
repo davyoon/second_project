@@ -26,7 +26,9 @@ CREATE TABLE threads (
 
 CREATE TABLE subforums (
 	subforums_id INTEGER PRIMARY KEY autoincrement,
-	topic TEXT
+	topic TEXT,
+	time VARCHAR(255),
+	creator VARCHAR(255)
 );
 
 CREATE TABLE images (
