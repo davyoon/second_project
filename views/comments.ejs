@@ -6,10 +6,7 @@
 	<link rel="stylesheet" href="/style.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
 </head>
-<body>
-	
-
-			
+<body class="container">		
 			<!-- NAVBAR -->
 	<div class="ui small menu">
 		<img src="/photos/logo.png" class="item" width="150" height="50">
@@ -90,12 +87,12 @@
  				<% comments.forEach(function(comment){ %>
   				<div class="comment">
     				<a class="avatar">
-      				<img src="<%=image%>">
+      				<img src="<%=comment.creator%>" width="70" height="50">
     				</a>
     				<div class="content">
       				<a class="author"><%=comment.name%></a>
       				<div class="metadata">
-       	 			<span class="date">Today at 5:42PM</span>
+       	 			<span class="date"><%=comment.time%></span>
       				</div>
       				<div class="text">
        	 				<%=comment.comment%>

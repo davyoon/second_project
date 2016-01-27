@@ -14,6 +14,9 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var moment = require('moment');
 
+var secrets = JSON.parse(fs.readFileSync('secrets.json', 'utf8'))
+
+
 //_____________passport
 passport.serializeUser(function(user, done){
   console.log("*****************");
@@ -30,8 +33,8 @@ passport.serializeUser(function(user, done){
   });
 
   passport.use(new FacebookStrategy({
-    clientID: "1558806191078093",
-    clientSecret: "15825d8ecd1b264aaa5c0c5458c9cb56",
+    clientID: secrets.facebookID,
+    clientSecret: secrets.secret,
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
   },
     function(accessToken, refreshToken, profile, done){
@@ -167,8 +170,10 @@ app.post('/forums/comment/:tid', function(req, res){
 	var id = req.user.user_id;
 	var text = req.body.text;
 	var tid = req.params.tid;
+	var image = req.user.image;
+	var date = moment().format('lll');
 
-	db.run('INSERT INTO comments (comment, thread_idc, user_idc) VALUES (?, ?, ?)', text, tid, id, function(err){
+	db.run('INSERT INTO comments (comment, thread_idc, user_idc, creator, time) VALUES (?, ?, ?, ?, ?)', text, tid, id, image, date, function(err){
 		if(err){
 			throw err;
 		}

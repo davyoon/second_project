@@ -47,6 +47,8 @@ CREATE TABLE comments (
 	comment TEXT,
 	thread_idc INTEGER,
 	user_idc INTEGER,
+	time VARCHAR(255),
+	creator VARCHAR(255),
 	FOREIGN KEY(thread_idc) REFERENCES threads(threads_id),
 	FOREIGN KEY(user_idc) REFERENCES users(threads_id)
 );
