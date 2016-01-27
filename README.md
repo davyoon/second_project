@@ -92,6 +92,7 @@ Get route '/forums/gallery/:tid' (post)
 * HTML/CSS
 * JavaScript
 * Semantic UI
+* Facebook OAuth
 * Node.js
 * Express.js
 * SQLite3
